@@ -8,21 +8,25 @@ import nl.cynetic.solidexercises.entities.University;
 import nl.cynetic.solidexercises.entities.UniversityPackage;
 import nl.cynetic.solidexercises.repositories.StudentRepository;
 import nl.cynetic.solidexercises.repositories.UniversityRepository;
+import nl.cynetic.solidexercises.services.Logger;
 import nl.cynetic.solidexercises.services.StudentService;
 
 public class StudentServiceImpl implements StudentService {
 
     private StudentRepository studentRepository;
     private UniversityRepository universityRepository;
+    private Logger logger;
 
-    public StudentServiceImpl(StudentRepository studentRepository, UniversityRepository universityRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository, UniversityRepository universityRepository,
+            Logger logger) {
         this.studentRepository = studentRepository;
         this.universityRepository = universityRepository;
+        this.logger = logger;
     }
 
     public boolean add(String emailAddress, UUID universityId)
     {       
-        System.console().writer().println(String.format("Log: Start add student with email '%s'", emailAddress));
+        logger.logMessage("Log: Start add student with email '%s'", emailAddress);
  
         if ("".equals(emailAddress) || emailAddress == null)
         {
@@ -35,21 +39,11 @@ public class StudentServiceImpl implements StudentService {
         }
         
         University university = universityRepository.getById(universityId);
- 
-        Student student = new Student(emailAddress, universityId);
-         
-        if (university.getUniversityPackage() == UniversityPackage.STANDARD)
-        {
-            student.setMonthlyEbookAllowance(10);
-        }
-        else if (university.getUniversityPackage() == UniversityPackage.PREMIUM)
-        {
-            student.setMonthlyEbookAllowance(10 * 2);
-        }                           
+        Student student = new Student(emailAddress, universityId, university.getUniversityPackage());
          
         studentRepository.add(student);
  
-        System.console().writer().println(String.format("Log: End add student with email '%s'", emailAddress));
+        logger.logMessage("Log: End add student with email '%s'", emailAddress);
  
         return true;
     }

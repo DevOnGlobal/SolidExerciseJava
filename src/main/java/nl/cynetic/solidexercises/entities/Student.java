@@ -2,27 +2,18 @@ package nl.cynetic.solidexercises.entities;
 
 import java.util.UUID;
 
-public class Student {
-    private final int STANDARD_ALLOWANCE = 10;
+public abstract class Student {
+    protected final int STANDARD_ALLOWANCE = 10;
 
     private String emailAddress;
     private UUID universityId;
     private int monthlyEbookAllowance;
     private int currentlyBorrowedEbooks;
     
-    public Student(String emailAddress, UUID universityId, UniversityPackage universityPackage) {
+    public Student(String emailAddress, UUID universityId) {
         this.emailAddress = emailAddress;
         this.universityId = universityId;
         this.currentlyBorrowedEbooks = 0;
-
-        if (universityPackage == UniversityPackage.STANDARD)
-        {
-            this.monthlyEbookAllowance = STANDARD_ALLOWANCE;
-        }
-        else if (universityPackage == UniversityPackage.PREMIUM)
-        {
-            this.monthlyEbookAllowance = STANDARD_ALLOWANCE * 2;
-        } 
     }
 
     public String getEmailAddress() {
@@ -37,11 +28,13 @@ public class Student {
         return this.monthlyEbookAllowance;
     }
 
-    public void setMonthlyEbookAllowance(int allowance) {
+    protected void setMonthlyEbookAllowance(int allowance) {
         this.monthlyEbookAllowance = allowance;
     }
 
     public int getCurrentlyBorrowedEbooks() {
         return this.currentlyBorrowedEbooks;
     }
+
+    public abstract void addBonusAllowance();
 }

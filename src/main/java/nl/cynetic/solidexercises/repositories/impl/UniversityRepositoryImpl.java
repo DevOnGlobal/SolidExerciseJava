@@ -7,6 +7,7 @@ import nl.cynetic.solidexercises.repositories.UniversityRepository;
 
 public class UniversityRepositoryImpl implements UniversityRepository {
  
+    @Override
     public University getById(UUID universityId)
     {
         throw new UnsupportedOperationException();

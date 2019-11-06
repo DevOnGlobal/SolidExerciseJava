@@ -12,6 +12,10 @@ public class StudentFactoryImpl implements StudentFactory {
             return new PremiumStudent(emailAddress, university.getId());
         }
 
+        if (university.getUniversityPackage() == UniversityPackage.UNLIMITED) {
+            return new UnlimitedStudent(emailAddress, university.getId());
+        }
+
         return new StandardStudent(emailAddress, university.getId());
     }
 }

@@ -3,6 +3,7 @@ package nl.cynetic.solidexercises.services.impl;
 import java.util.List;
 import java.util.UUID;
 
+import nl.cynetic.solidexercises.entities.LimitedStudent;
 import nl.cynetic.solidexercises.entities.Student;
 import nl.cynetic.solidexercises.entities.University;
 import nl.cynetic.solidexercises.repositories.StudentRepository;
@@ -56,7 +57,10 @@ public class StudentServiceImpl implements StudentService {
     {
         for (Student student : getStudents())
         {
-            student.addBonusAllowance();
+            if (student instanceof LimitedStudent) {
+                LimitedStudent limitedStudent = (LimitedStudent)student;
+                limitedStudent.increaseBonusAllowance();
+            }
         }
     }
 

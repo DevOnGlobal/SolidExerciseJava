@@ -10,16 +10,16 @@ import nl.cynetic.solidexercises.repositories.StudentRepository;
 import nl.cynetic.solidexercises.repositories.UniversityRepository;
 import nl.cynetic.solidexercises.services.Logger;
 import nl.cynetic.solidexercises.services.StudentFactory;
-import nl.cynetic.solidexercises.services.StudentService;
+import nl.cynetic.solidexercises.services.StudentWriterService;
 
-public class StudentServiceImpl implements StudentService {
+public class StudentWriterServiceImpl implements StudentWriterService {
 
     private StudentRepository studentRepository;
     private UniversityRepository universityRepository;
     private Logger logger;
     private StudentFactory studentFactory;
 
-    public StudentServiceImpl(StudentRepository studentRepository, UniversityRepository universityRepository,
+    public StudentWriterServiceImpl(StudentRepository studentRepository, UniversityRepository universityRepository,
             StudentFactory studentFactory, Logger logger) {
         this.studentRepository = studentRepository;
         this.universityRepository = universityRepository;
@@ -62,20 +62,6 @@ public class StudentServiceImpl implements StudentService {
                 limitedStudent.increaseBonusAllowance();
             }
         }
-    }
-
-    @Override
-    public List<Student> getStudentsByUniversity()
-    {
-        //...
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public List<Student> getStudentsByCurrentlyBorrowedEbooks()
-    {
-        //...
-        throw new UnsupportedOperationException();       
     }
 
     private List<Student> getStudents() {

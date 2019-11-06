@@ -8,6 +8,7 @@ import nl.cynetic.solidexercises.entities.Student;
 import nl.cynetic.solidexercises.entities.University;
 import nl.cynetic.solidexercises.repositories.StudentRepository;
 import nl.cynetic.solidexercises.repositories.UniversityRepository;
+import nl.cynetic.solidexercises.services.BusinessServiceException;
 import nl.cynetic.solidexercises.services.Logger;
 import nl.cynetic.solidexercises.services.StudentFactory;
 import nl.cynetic.solidexercises.services.StudentWriterService;
@@ -28,18 +29,18 @@ public class StudentWriterServiceImpl implements StudentWriterService {
     }
 
     @Override
-    public boolean add(String emailAddress, UUID universityId)
+    public void add(String emailAddress, UUID universityId) throws BusinessServiceException
     {       
         logger.logMessage("Log: Start add student with email '%s'", emailAddress);
  
         if ("".equals(emailAddress) || emailAddress == null)
         {
-            return false;
+            throw new IllegalArgumentException("Given email address is not valid. Its either empty or NULL.");
         }
  
         if (studentRepository.exists(emailAddress))
         {
-            return false;
+            throw new BusinessServiceException("A user with the same e-mail address already exists.");
         }
         
         University university = universityRepository.getById(universityId);
@@ -48,8 +49,6 @@ public class StudentWriterServiceImpl implements StudentWriterService {
         studentRepository.add(student);
  
         logger.logMessage("Log: End add student with email '%s'", emailAddress);
- 
-        return true;
     }
     
     @Override
